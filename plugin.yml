@@ -1,5 +1,5 @@
 name: ConsoleScheduler
-main: BoomerBR.Plugin.ConsoleScheduler
+main: BoomerBR.plugin.ConsoleScheduler
 version: 1.4.3
 author: BoomerBR
 
