@@ -60,7 +60,7 @@ public class ConsoleScheduler
   
   public void initialDelay()
   {
-    getServer().getScheduler().runTaskLaterAsynchronously(this, new Runnable()
+    getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable()
     {
       @Override
       public void run()
@@ -102,7 +102,7 @@ public class ConsoleScheduler
   }
   public void repeatingTask(final int counter)
   {
-    getServer().getScheduler().runTaskTimerAsynchronously(this, new Runnable()
+    getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable()
     {
       @Override
       public void run()
@@ -113,7 +113,7 @@ public class ConsoleScheduler
   }
   public void nonrepeatingTask(final int counter)
   {
-    getServer().getScheduler().runTaskLaterAsynchronously(this, new Runnable()
+    getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable()
     {
       @Override
       public void run()
@@ -124,7 +124,7 @@ public class ConsoleScheduler
   }
   public void timeTask(final int counter)
   {
-    getServer().getScheduler().runTaskTimerAsynchronously(this, new Runnable()
+    getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable()
     {
       @Override
       public void run()
