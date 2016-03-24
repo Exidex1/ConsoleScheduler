@@ -60,7 +60,7 @@ public class ConsoleScheduler
   
   public void initialDelay()
   {
-    getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable()
+    getServer().getScheduler().runTaskLaterAsynchronously(this, new Runnable()
     {
       @Override
       public void run()
@@ -102,7 +102,7 @@ public class ConsoleScheduler
   }
   public void repeatingTask(final int counter)
   {
-    getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable()
+    getServer().getScheduler().runTaskTimerAsynchronously(this, new Runnable()
     {
       @Override
       public void run()
@@ -113,7 +113,7 @@ public class ConsoleScheduler
   }
   public void nonrepeatingTask(final int counter)
   {
-    getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable()
+    getServer().getScheduler().runTaskLaterAsynchronously(this, new Runnable()
     {
       @Override
       public void run()
@@ -124,7 +124,7 @@ public class ConsoleScheduler
   }
   public void timeTask(final int counter)
   {
-    getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable()
+    getServer().getScheduler().runTaskTimerAsynchronously(this, new Runnable()
     {
       @Override
       public void run()
@@ -219,7 +219,7 @@ public class ConsoleScheduler
   
   public void CheckUpdate()
   {
-    Updater updater = new Updater(this, 48795, getFile(), Updater.UpdateType.DEFAULT, false);
+    Updater updater = new Updater(this, 98145, getFile(), Updater.UpdateType.DEFAULT, false);
   }
   
   public int getOffset(int counter)
