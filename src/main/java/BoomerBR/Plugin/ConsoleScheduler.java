@@ -133,9 +133,18 @@ public class ConsoleScheduler
       }
     }, getOffset(counter) * 20L, 1728000L);
   }
-  public void runCommand(int counter)
-  {
-    getServer().dispatchCommand(getServer().getConsoleSender(), getConfig().getString("CommandSchedule.Command" + counter + ".Command"));
+  public void runCommand(final int counter) {
+    if (getServer().isPrimaryThread()) {
+      getServer().dispatchCommand(getServer().getConsoleSender(), getConfig().getString("CommandSchedule.Command" + counter + ".Command"));
+    } else {
+      // PaperSpigot will complain about async command execution without this. See http://bit.ly/1oSiM6C
+      getServer().getScheduler().runTask(this, new Runnable() {
+        @Override
+        public void run() {
+          getServer().dispatchCommand(getServer().getConsoleSender(), getConfig().getString("CommandSchedule.Command" + counter + ".Command"));
+        }
+      });
+    }
   }
   
   @Override
