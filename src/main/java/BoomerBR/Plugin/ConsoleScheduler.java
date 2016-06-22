@@ -7,7 +7,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import net.gravitydevelopment.updater.Updater;
 import net.milkbowl.vault.permission.Permission;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -16,6 +19,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
 
 public class ConsoleScheduler
   extends JavaPlugin
@@ -133,9 +137,18 @@ public class ConsoleScheduler
       }
     }, getOffset(counter) * 20L, 1728000L);
   }
-  public void runCommand(int counter)
-  {
-    getServer().dispatchCommand(getServer().getConsoleSender(), getConfig().getString("CommandSchedule.Command" + counter + ".Command"));
+  public void runCommand(final int counter) {
+    if (getServer().isPrimaryThread()) {
+      getServer().dispatchCommand(getServer().getConsoleSender(), getConfig().getString("CommandSchedule.Command" + counter + ".Command"));
+    } else {
+      // PaperSpigot will complain about async command execution without this. See http://bit.ly/1oSiM6C
+      getServer().getScheduler().runTask(this, new Runnable() {
+        @Override
+        public void run() {
+          getServer().dispatchCommand(getServer().getConsoleSender(), getConfig().getString("CommandSchedule.Command" + counter + ".Command"));
+        }
+      });
+    }
   }
   
   @Override
